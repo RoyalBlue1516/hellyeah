@@ -1,0 +1,63 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct treenode {
+	int data;
+	struct node *left, *right;
+}treenode;
+
+
+treenode n1 = { 1,NULL,NULL };
+treenode n2 = { 4,&n1,NULL };
+treenode n3 = { 16,NULL,NULL };
+treenode n4 = { 25,NULL,NULL };
+treenode n5 = { 20,&n3,&n4 };
+treenode n6 = { 15,&n2,&n5 };
+treenode* root = &n6;
+
+
+void inorder(treenode* root)		//중위 순회---왼쪽서브트리->루트노드->오른쪽서브트리
+{
+	if (root != NULL)
+	{
+		inorder(root->left);
+		printf("[%d] ", root->data);
+		inorder(root->right);
+	}
+}
+
+void preorder(treenode* root)		//전위순호---루트노드->왼쪽서브트리->오른쪽서브트리
+{
+	if (root != NULL)
+	{
+		printf("[%d] ", root->data);
+		preorder(root->left);
+		preorder(root->right);
+	}
+}
+
+void postorder(treenode* root)		//후위순회---왼쪽서브트리->오른쪽서브트리->루트노드
+{
+	if (root != NULL)
+	{
+		postorder(root->left);
+		postorder(root->right);
+		printf("[%d] ", root->data);
+	}
+}
+
+int main(void)
+{
+	printf("중위순회 \n");
+	inorder(root);
+	printf("\n");
+
+	printf("전위순회 \n");
+	preorder(root);
+	printf("\n");
+
+	printf("후위순회 \n");
+	postorder(root);
+	
+	return 0;
+}
