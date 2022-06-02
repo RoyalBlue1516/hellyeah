@@ -40,7 +40,7 @@ void inorder_iter(treenode* root)
 {
 	while (1)
 	{
-		for (; root; root->left)
+		for (; root; root=root->left)
 		{
 			push(root);
 		}
