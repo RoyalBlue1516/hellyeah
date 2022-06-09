@@ -1,0 +1,58 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define TRUE 1
+#define FALSE 0
+
+typedef struct tree {
+	int data;
+	struct tree* left, * right;
+	int thread;
+}tree;
+
+//		G
+//	C		F
+//A	  B    D  E
+tree n1 = { 'A',NULL, NULL, 1 };
+tree n2 = { 'B',NULL, NULL, 1 };
+tree n3 = { 'C',&n1, &n2, 0 };
+tree n4 = { 'D',NULL, NULL, 1 };
+tree n5 = { 'E',NULL, NULL, 0 };
+tree n6 = { 'F',&n4, &n5, 0 };
+tree n7 = { 'G',&n3, &n6, 0 };
+tree* exp = &n7;
+
+tree* find(tree* p)
+{
+	tree* q = p->right;
+	if (q == NULL || p->thread == TRUE)
+		return q;
+
+	while (q->left != NULL)
+		q = q->left;
+	return q;
+}
+
+void inorder(tree* p)
+{
+	tree* q;
+	q = p;
+	while (q->left)
+		q = q->left;
+	do {
+		printf("%c-> ", q->data);
+		q = find(q);
+	} while (q);
+}
+
+int main(void)
+{
+	n1.right = &n3;
+	n2.right = &n7;
+	n4.right = &n6;
+
+	inorder(exp);
+	printf("\n");
+	return 0;
+}
